@@ -9,13 +9,13 @@ import (
 )
 
 func main() {
-	bot, err := tgbotapi.NewBotAPI("394586798:AAGtPSoVTZbuBYzs4Bhp2xJ7kpXRF6a8hNo")
+	bot, err := tgbotapi.NewBotAPI("363599183:AAFR1GX15Kdr1b4NKbK0lnVJoy2A-MzLW88")
 	if err != nil {
 		log.Panic(err)
 	}
 
 	bot.Debug = true
-	log.Printf("Authorized on account %s", bot.Self.UserName)
+	// log.Printf("Authorized on account %s", bot.Self.UserName)
 
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 60
@@ -63,7 +63,6 @@ func main() {
 		words := strings.FieldsFunc(userMsg, f)
 
 		for _, v := range words {
-			log.Printf(v)
 			if punMapVal, ok := punMap[v]; ok {
 				msg := tgbotapi.NewMessage(update.Message.Chat.ID, punMapVal)
 				msg.ReplyToMessageID = update.Message.MessageID
