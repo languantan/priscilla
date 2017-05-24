@@ -8,15 +8,18 @@ import (
 	"github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
+var (
+	botAPI string
+)
+
 func main() {
-	// bot, err := tgbotapi.NewBotAPI("363599183:AAFR1GX15Kdr1b4NKbK0lnVJoy2A-MzLW88")
-	bot, err := tgbotapi.NewBotAPI("394586798:AAGtPSoVTZbuBYzs4Bhp2xJ7kpXRF6a8hNo")
+	bot, err := tgbotapi.NewBotAPI(botAPI)
 	if err != nil {
 		log.Panic(err)
 	}
 
 	bot.Debug = true
-	// log.Printf("Authorized on account %s", bot.Self.UserName)
+	log.Printf("Authorized on account %s", bot.Self.UserName)
 
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 60
