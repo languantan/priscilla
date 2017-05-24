@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"os"
 	"strings"
 	"unicode"
 
@@ -13,6 +14,14 @@ var (
 )
 
 func main() {
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		log.Fatal("$PORT must be set")
+	}
+
+	botapi := os.Getenv("BOTAPI")
+
 	bot, err := tgbotapi.NewBotAPI(botapi)
 	log.Printf(botapi)
 	log.Println(err)
