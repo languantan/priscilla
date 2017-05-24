@@ -9,11 +9,13 @@ import (
 )
 
 var (
-	botAPI string
+	botapi string
 )
 
 func main() {
-	bot, err := tgbotapi.NewBotAPI(botAPI)
+	bot, err := tgbotapi.NewBotAPI(botapi)
+	log.Printf(botapi)
+	log.Println(err)
 	if err != nil {
 		log.Panic(err)
 	}
