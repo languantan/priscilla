@@ -13,18 +13,20 @@ var (
 	botapi string
 )
 
-func main() {
-	// port := os.Getenv("PORT")
+func getPort() string {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "5000"
+	}
+	return ":" + port
+}
 
-	// if port == "" {
-	// 	log.Fatal("$PORT must be set")
-	// }
+func main() {
+	// os.Setenv("BOTAPI", "394586798:AAGtPSoVTZbuBYzs4Bhp2xJ7kpXRF6a8hNo")
 
 	botapi := os.Getenv("BOTAPI")
 
 	bot, err := tgbotapi.NewBotAPI(botapi)
-	log.Printf(botapi)
-	log.Println(err)
 	if err != nil {
 		log.Panic(err)
 	}
