@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"net/http"
 	"os"
 	"strings"
 	"unicode"
@@ -22,7 +23,7 @@ func getPort() string {
 }
 
 func main() {
-	// os.Setenv("BOTAPI", "394586798:AAGtPSoVTZbuBYzs4Bhp2xJ7kpXRF6a8hNo")
+	os.Setenv("BOTAPI", "394586798:AAGtPSoVTZbuBYzs4Bhp2xJ7kpXRF6a8hNo")
 
 	botapi := os.Getenv("BOTAPI")
 
@@ -106,4 +107,6 @@ func main() {
 			}
 		}
 	}
+
+	http.ListenAndServe(getPort(), nil)
 }
