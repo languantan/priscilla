@@ -10,21 +10,8 @@ import (
 	"github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
-var (
-	botapi string
-)
-
-func getPort() string {
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "5000"
-	}
-	return ":" + port
-}
-
 func main() {
 	os.Setenv("BOTAPI", "394586798:AAGtPSoVTZbuBYzs4Bhp2xJ7kpXRF6a8hNo")
-
 	botapi := os.Getenv("BOTAPI")
 
 	bot, err := tgbotapi.NewBotAPI(botapi)
@@ -33,12 +20,23 @@ func main() {
 	}
 
 	bot.Debug = true
+
 	log.Printf("Authorized on account %s", bot.Self.UserName)
 
-	u := tgbotapi.NewUpdate(0)
-	u.Timeout = 60
+	log.Println(bot.Token)
 
-	updates, err := bot.GetUpdatesChan(u)
+	_, err = bot.SetWebhook(tgbotapi.NewWebhookWithCert("https://intense-temple-99426.herokuapp.com:8443/"+bot.Token, "cert.pem"))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	updates := bot.ListenForWebhook("/" + bot.Token)
+	go http.ListenAndServeTLS("0.0.0.0:8443", "cert.pem", "key.pem", nil)
+
+	// u := tgbotapi.NewUpdate(0)
+	// u.Timeout = 60
+
+	// updates, err := bot.GetUpdatesChan(u)
 
 	punMap := map[string]string{
 		"axe":          "I used to work as a lumberjack, but then I got axed.",
@@ -85,10 +83,14 @@ func main() {
 		"whiteboard":   "Whiteboards are remarkable.",
 	}
 
+	// for update := range updates {
+	// 	log.Printf("%+v\n", update)
+	// }
+
 	for update := range updates {
-		if update.Message == nil {
-			continue
-		}
+		// if update.Message == nil {
+		// 	continue
+		// }
 
 		userMsg := strings.ToLower(update.Message.Text)
 
@@ -107,6 +109,4 @@ func main() {
 			}
 		}
 	}
-
-	http.ListenAndServe(getPort(), nil)
 }
