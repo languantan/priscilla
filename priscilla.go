@@ -9,8 +9,6 @@ import (
 )
 
 func init() {
-	// to set as env variable in the future
-	os.Setenv("BOTAPI", "394586798:AAE-EClS1jMjKvVszj8B4Br2PeVEsLqXf8A")
 	botapi := os.Getenv("BOTAPI")
 
 	bot, err := tgbotapi.NewBotAPI(botapi)
